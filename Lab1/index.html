@@ -17,43 +17,31 @@
       <div id="logo">
       </div></a>
     <div id="searchArea">
-      <table>
-        <tr>
-          <td>
-            Let's
-          </td>
-        </tr>
-        <tr><td>
-          <form action="https://www.google.com/search">
-            <input type="submit" value="Search">
-        </td></tr>
-          <tr><td>
-              <input type="text" name="q">
-              <input type="hidden" name="as_sitesearch" method="get"  value="cs.hku.hk">
-            </form>
-          </td></tr>
-          <tr><td>
-            in <b>cs.hku.hk</b> <!-- supposed to be <b>hku.hk</b> -->
-          </td></tr>
-        </tr>
-      </table>
+      <form action="https://www.google.com/search">
+        <div class="col-1">Let's</div>
+        <div class="col-1"><input type="submit" value="Search" class="searchButton"></div>
+        <div class="col-1"><input type="text" name="q" class="searchInput"><input type="hidden" name="as_sitesearch" method="get"  value="cs.hku.hk"></div>
+        <div class="col-1">in <b>cs.hku.hk</b> <!-- supposed to be <b>hku.hk</b> --></div>
+      </form>
     </div>
+
     <div class="events">
       <h3>Upcoming Events</h3>
       <ul>
-        <li><a href="http://hkuems1.hku.hk/hkuems/ec_hdetail.aspx?guest=Y&UEID=67201">Public Seminar of Physics RPg Students.</a></li>
-        <li><a href="http://hkuems1.hku.hk/hkuems/ec_hdetail.aspx?guest=Y&UEID=67198">Three-dimensional Quantum Hall Effect and Metal-insulator Transition in ZrTe5.</a></li>
-        <li><a href="http://hkuems1.hku.hk/hkuems/ec_hdetail.aspx?guest=Y&UEID=66860">Sharing Session by MPH Alumni.</a></li>
+        <li><a href="http://hkuems1.hku.hk/hkuems/ec_hdetail.aspx?guest=Y&UEID=67201" class="events hyperlink">Public Seminar of Physics RPg Students.</a></li>
+        <li><a href="http://hkuems1.hku.hk/hkuems/ec_hdetail.aspx?guest=Y&UEID=67198" class="events hyperlink">Three-dimensional Quantum Hall Effect and Metal-insulator Transition in ZrTe5.</a></li>
+        <li><a href="http://hkuems1.hku.hk/hkuems/ec_hdetail.aspx?guest=Y&UEID=66860" class="events hyperlink">Sharing Session by MPH Alumni.</a></li>
       </ul>
-      <img class="image" src="HKU.jpg">
     </div>
+    <img class="image" src="HKU.jpg">
+
     <div id="footer">
       <h3>HKU website - Feedback, Web accessibility</h3>
       <p>Email:<a href="mailto:webadm@hku.hk">webadm@hku.hk</a></p>
       <p>Telephone: (+852) 3917 0123</p>
     </div>
 
-    <!--Step 10-->
+    <!--Step 17-->
 
 </body>
 </html>

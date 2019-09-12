@@ -7,6 +7,76 @@
   background-repeat: no-repeat;
   background-attachment: scroll;
   background-size: contain;
-  background-position: left top;
+  background-position: left top;}
+#searchArea{
+  column-count: 4;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.col-1{
+  margin-left: 2px;
+  margin-right: 2px;
+  margin-top: 2px;
+  margin-bottom: 2px;
+  float: left;
+  background-color: #D3D3D3;
+  width: 100%;
+  height: 40px;
+  padding-left: 10px;
+  padding-top: 10px;
+  font-size: x-large;}
+.searchButton{
+  height: 30px;
+  width: 80%;
+  font-style: italic;
+  font-weight: bold;
+  font-size: 20px;
+  color: black;
+  border: none;
+  text-shadow: 1px 1px 3px black;
+  background-image: linear-gradient(to top left,#87CEFA,#FFB6C1);
+}
+.searchInput{
+  height: 30px;
+  width: 70%;
+  border-width: 1px;
+  border-style: dashed;
+  border-color: red;
+  font-size: 20px;
+}
 
+/*bugs begin*/
+
+.events{
+  float: left;
+  margin-left: 20px;
+  width: 500px;
+  display: inline-block;
+}
+li a{
+  font-size: 18px;
+  list-style-type: disc;
+  text-decoration: none;
+  background-color: #8FBC8F;
+  -webkit-transition: background-color 2s; /* For Safari 3.1 to 6.0 */
+  transition: background-color 2s;
+}
+li a:hover {
+  background-color: #90EE90;
+}
+
+img {
+  width: 392px;
+  height: 300px;
+  margin-left: 10px;
+}
+
+/*idk anymore*/
+#footer {
+  background-color: #FFA07A;
+  position: static;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  padding: 1rem;
 }
