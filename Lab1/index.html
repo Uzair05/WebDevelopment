@@ -13,12 +13,33 @@
 
 <body>
 
-    <div id="logo">
-      <a href="index.html"><img src="logo.jpg" alt="HKU LOGO" height="125"></a>
-    </div>
+    <a href="index.html">
+      <div id="logo">
+        <img src="logo.jpg" alt="HKU LOGO" height="125">
+      </div>
+    </a>
 
 
     <div id="searchArea">
+      <table>
+        <tr>
+          <td>
+            Let's
+          </td>
+          <td>
+            <form action="https://www.google.com/search">
+              <input type="submit" value="Search">
+          </td>
+          <td>
+              <input type="text" name="q">
+              <input type="hidden" name="as_sitesearch" method="get"  value="cs.hku.hk">
+            </form>
+          </td>
+          <td>
+            in <b>cs.hku.hk</b> <!-- supposed to be <b>hku.hk</b> -->
+          </td>
+        </tr>
+      </table>
     </div>
 
     <div class="events">
