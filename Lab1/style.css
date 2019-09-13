@@ -8,11 +8,13 @@
   background-attachment: scroll;
   background-size: contain;
   background-position: left top;}
+
 #searchArea{
   column-count: 4;
   margin-left: 20px;
   margin-right: 20px;
 }
+
 .col-1{
   margin-left: 2px;
   margin-right: 2px;
@@ -25,6 +27,7 @@
   padding-left: 10px;
   padding-top: 10px;
   font-size: x-large;}
+
 .searchButton{
   height: 30px;
   width: 80%;
@@ -36,6 +39,7 @@
   text-shadow: 1px 1px 3px black;
   background-image: linear-gradient(to top left,#87CEFA,#FFB6C1);
 }
+
 .searchInput{
   height: 30px;
   width: 70%;
@@ -45,14 +49,13 @@
   font-size: 20px;
 }
 
-/*bugs begin*/
-
 .events{
   float: left;
   margin-left: 20px;
   width: 500px;
   display: inline-block;
 }
+
 li a{
   font-size: 18px;
   list-style-type: disc;
@@ -61,6 +64,7 @@ li a{
   -webkit-transition: background-color 2s; /* For Safari 3.1 to 6.0 */
   transition: background-color 2s;
 }
+
 li a:hover {
   background-color: #90EE90;
 }
@@ -71,7 +75,6 @@ img {
   margin-left: 10px;
 }
 
-/*idk anymore*/
 #footer {
   background-color: #FFA07A;
   position: static;
@@ -79,4 +82,31 @@ img {
   left: 0px;
   right: 0px;
   padding: 1rem;
+}
+
+@media screen and (max-width: 580px){
+  li a{
+    margin-right: 0;
+    font-size: 15px;
+    width: 60%;
+  }
+  #footer h3 {
+    font-size: medium;
+    margin-top: 0px;
+  }
+  #footer p {
+    font-size: small;
+    margin-top: 0px;
+    margin-bottom: 0px;
+  }
+  #searchArea{
+    column-count: 1;
+  }
+  .col-1 {
+    width: 90%;
+  }
+  .image{
+    width: 70%;
+    height: auto;
+  }
 }
