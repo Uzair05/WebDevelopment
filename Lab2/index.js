@@ -75,10 +75,12 @@ function styleSearchButton(){
 /*error in this function*/
 function inputValidation(event){
 
-	var f = document.getElementById("mySearch");
-	if (f.value == ""){
+	if (document.getElementById("mySearch").value == ""){
+		document.getElementById("myButton").addEventListener("click", function(event){
+			event.preventDefault()
+		});
 		alert("Please fill in the content you want to search!");
-		document.getElementTagName("myButton").addEventListener("click", function(event){event.preventDefault()});
+		f.focus;
 	}
 
 }

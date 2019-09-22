@@ -13,19 +13,21 @@
     </a>
 
     <div id="searchArea">
-        <form action="https://www.google.com/search" method="get">
-			<div class="col-1">Let's</div>
-            <div class="col-1">
-                <input class="searchButton" type="submit" value="Search" id="myButton">
-            </div>
-            <div class="col-1">
-                <input class="searchInput" type="text" name="q" id="mySearch">
-            </div>
-            <div class="col-1">
-                in <b>hku.hk</b>
-				<input type="hidden" name="as_sitesearch" value="hku.hk">
-            </div>
-        </form>
+      <form action="https://www.google.com/search" method="get">
+			<div class="col-1">
+        Let's
+      </div>
+      <div class="col-1">
+        <input class="searchButton" type="submit" value="Search" id="myButton" onclick="inputValidation();">
+      </div>
+      <div class="col-1">
+        <input class="searchInput" type="text" name="q" id="mySearch">
+      </div>
+      <div class="col-1">
+        in <b>hku.hk</b>
+        <input type="hidden" name="as_sitesearch" value="hku.hk">
+      </div>
+      </form>
     </div>
 
     <div id="eventList" class="events">
