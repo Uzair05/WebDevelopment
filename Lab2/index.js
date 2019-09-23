@@ -3,8 +3,6 @@ function loadPage(){
 	loadEvents();
 	loadFooter();
 	styleSearchButton();
-
-
 }
 
 function removeElement(){
@@ -72,15 +70,15 @@ function styleSearchButton(){
 
 
 
-/*error in this function*/
-function inputValidation(event){
-
-	if (document.getElementById("mySearch").value == ""){
-		document.getElementById("myButton").addEventListener("click", function(event){
-			event.preventDefault()
-		});
-		alert("Please fill in the content you want to search!");
-		f.focus;
-	}
+function inputValidation(){
+	var subButton = document.getElementById("myButton");
+	subButton.addEventListener('click',function(e){
+		var inputSearch = document.getElementsById("mySearch")
+		if(inputSearch.value.length <= 0){
+			e.preventDefault;
+			alert("Please fill in the content you want to search!");
+			inputSearch.focus;
+		}
+	},false);
 
 }
