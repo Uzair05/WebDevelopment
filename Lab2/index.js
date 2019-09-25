@@ -9,7 +9,6 @@ function removeElement(){
 	var parent = document.getElementById("eventList");
 	parent.removeChild(parent.children[0]);
 }
-
 function loadEvents(){
 	var parent = document.getElementById("eventList");
 	var x = document.createElement("h3");
@@ -44,7 +43,6 @@ function loadEvents(){
 
 
 }
-
 function loadFooter(){
 	var parent = document.getElementById("footer");
 	var header = document.createElement("h3");
@@ -61,24 +59,16 @@ function loadFooter(){
 	para2.innerHTML="Telephone: (+852) 3917 0123";
 	parent.appendChild(para2);
 }
-
 function styleSearchButton(){
  var parent = document.getElementById("myButton");
  parent.style.backgroundImage =  'linear-gradient(to left top, #87CEFA, #FFB6C1)';
 }
-
-
-
-
 function inputValidation(){
-	var subButton = document.getElementById("myButton");
-	subButton.addEventListener('click',function(e){
-		var inputSearch = document.getElementsById("mySearch")
-		if(inputSearch.value.length <= 0){
-			e.preventDefault;
-			alert("Please fill in the content you want to search!");
-			inputSearch.focus;
-		}
-	},false);
-
-}
+	var f = document.getElementById("mySearch");
+	if (f.value == ''){
+		alert("Please fill in the content you want to search!");
+		f.focus();
+		return false;
+	} else {
+		return true;
+	}}
