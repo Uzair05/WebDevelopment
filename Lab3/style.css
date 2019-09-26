@@ -1,0 +1,73 @@
+body {
+	width: 291px;
+	height: 593px;
+	background-image:url('background.jpg');
+	background-repeat:no-repeat;	
+}
+	
+nav{
+	position: absolute;
+	top: 60px;
+	left: 35px;
+	height: 10px;
+	width: 100%;
+}
+
+nav div{
+		display: inline-block;
+		width: 70px;
+}
+
+canvas{
+	display: inline-block;
+	position: absolute;
+	top: 100px;
+	left: 20px;
+	border: 1px solid #000000;
+}
+
+#time {
+	position: absolute;
+	top: 95px;
+	left: 58px;
+	font-family: "Times New Roman",Times,serif;
+	font-size: 55px;
+}
+
+#day {
+	position: absolute;
+	font-size: 20px;
+	top: 170px;
+	left: 85px;
+}
+
+.icon {	
+	margin-top: 15px;
+	margin-left: 15px;
+}
+
+.blocks{
+	position: absolute;
+	left: 19px;
+	top: 211px;
+	width:248px;
+	height: 310px;
+}
+
+.block {
+	display: inline-block;
+	float:left;
+	width: 62px;
+	height: 62px;
+}
+
+#videoId{	
+	position: absolute;
+	display: inline-block;
+	top: 100px;
+	width: 272px;
+	height: 457px;
+	left: 21px;
+	object-fit:fill;
+}
+

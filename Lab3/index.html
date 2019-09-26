@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>A Simple iPhone Simulator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body onload="drawTime();drawDay();">
+
+	<div id="time"></div>
+	<div id="day"></div>
+	
+	<div id="iconblocks" class="blocks">
+			<div class="block">
+				<img class="icon" id="musicIcon" src="music.png">
+			</div>
+			<div class="block"></div>
+			<div class="block"></div>
+			<div class="block"></div>
+			<div class="block">
+				<img class="icon" id="photosIcon" src="photos.png" onclick="openPhotos()">
+			</div>
+			<div class="block"></div>
+			<div class="block"></div>
+			<div class="block"></div>
+			<div class="block"></div>
+			<div class="block">
+				<img class="icon" id="pagesIcon" src="pages.png">
+			</div>
+			<div class="block"></div>
+			<div class="block"></div>
+			<div class="block">
+				<img class="icon" id="videoIcon" src="video.png" onclick="openVideo()">
+			</div>
+			<div class="block"></div>
+			<div class="block"></div>
+			<div class="block"></div>
+	</div>
+			
+
+<script>
+	
+	var photo_list=["photo1.jpg","photo2.jpg","photo3.jpg"];
+	var global_photo_index=0;
+	
+	function drawDay() {
+		d = new Date();
+		// e.g., d is "Wed Sep 25 2019 23:10:39 GMT+0800 (HKT)"
+		
+		datetext = d.toDateString();
+		// datetext is "23:10:39 GMT+0800 (HKT)"
+
+		document.getElementById("day").innerHTML = datetext;
+	}
+
+	setInterval(drawTime, 1000);
+
+	function drawTime() {
+	
+	
+	}
+
+
+	function allowDrop(ev) {
+		
+	}
+	
+
+	function drag(ev) {
+		
+	}
+
+	function drop(ev) {
+		
+	}
+	
+	
+	function openVideo() {
+		document.getElementById('time').style.display = "none";
+		document.getElementById('day').style.display = "none";		
+		document.getElementById('iconblocks').style.display = "none";
+		
+		var navbar = document.createElement("nav");
+		navbar.setAttribute("id","navId");		
+		var div1 = document.createElement("div");
+		div1.setAttribute("id","returnDiv");
+		div1.innerHTML = "<";
+		div1.setAttribute("onclick","return2HomeScreen()");
+		navbar.appendChild(div1);
+		var body =  document.getElementsByTagName("body")[0];
+		body.appendChild(navbar);
+
+		//implement the video element
+
+
+	}
+	
+
+	function openPhotos(){
+		
+		//make time, day, app icons disappear
+
+		//create the navigation bar
+		
+		//create the canvas element with a photo displayed on it
+
+	}
+	
+	
+	function previousPhoto(){
+		
+		
+	}
+	
+
+	function nextPhoto(){
+		
+		
+	}
+	
+
+	function return2HomeScreen() {	
+		var ele = document.getElementById('navId');
+		if(ele){
+			ele.parentElement.removeChild(ele);
+		}
+		
+		//remove video and canvas elements if they exist
+		
+		//make time, day, app icons re-appear
+	}	
+	
+</script>
+	
+</body>
+</html>
