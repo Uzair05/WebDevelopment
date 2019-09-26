@@ -9,44 +9,44 @@
 
 	<div id="time"></div>
 	<div id="day"></div>
-	
+
 	<div id="iconblocks" class="blocks">
-			<div class="block">
-				<img class="icon" id="musicIcon" src="music.png">
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)">
+				<img class="icon" id="musicIcon" src="music.png" draggable="true" ondragstart="drag(event)">
 			</div>
-			<div class="block"></div>
-			<div class="block"></div>
-			<div class="block"></div>
-			<div class="block">
-				<img class="icon" id="photosIcon" src="photos.png" onclick="openPhotos()">
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)">
+				<img class="icon" id="photosIcon" src="photos.png" onclick="openPhotos()" draggable="true" ondragstart="drag(event)">
 			</div>
-			<div class="block"></div>
-			<div class="block"></div>
-			<div class="block"></div>
-			<div class="block"></div>
-			<div class="block">
-				<img class="icon" id="pagesIcon" src="pages.png">
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)">
+				<img class="icon" id="pagesIcon" src="pages.png" draggable="true" ondragstart="drag(event)">
 			</div>
-			<div class="block"></div>
-			<div class="block"></div>
-			<div class="block">
-				<img class="icon" id="videoIcon" src="video.png" onclick="openVideo()">
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)">
+				<img class="icon" id="videoIcon" src="video.png" onclick="openVideo()" draggable="true" ondragstart="drag(event)">
 			</div>
-			<div class="block"></div>
-			<div class="block"></div>
-			<div class="block"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
+			<div class="block" ondragover="allowDrop(event)" ondrop="drop(event)"></div>
 	</div>
-			
+
 
 <script>
-	
+
 	var photo_list=["photo1.jpg","photo2.jpg","photo3.jpg"];
 	var global_photo_index=0;
-	
+
 	function drawDay() {
 		d = new Date();
 		// e.g., d is "Wed Sep 25 2019 23:10:39 GMT+0800 (HKT)"
-		
+
 		datetext = d.toDateString();
 		// datetext is "23:10:39 GMT+0800 (HKT)"
 
@@ -56,32 +56,39 @@
 	setInterval(drawTime, 1000);
 
 	function drawTime() {
-	
-	
+		var d = new Date();
+		var dateText = d.toTimeString().split(' ',1);
+		document.getElementById("time").innerHTML = dateText;
 	}
 
 
 	function allowDrop(ev) {
-		
+		ev.preventDefault();
 	}
-	
+
 
 	function drag(ev) {
-		
+		ev.dataTransfer.setData("Text",ev.currentTarget.id);
 	}
 
 	function drop(ev) {
-		
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("Text");
+		/*if (document.getElementById(ev.currentTarget.id).children.length == 0){
+			ev.currentTarget.appendChild(document.getElementById(data));
+		}*/
+		ev.currentTarget.appendChild(document.getElementById(data)) /*fix error*/
 	}
-	
-	
+
+
+
 	function openVideo() {
 		document.getElementById('time').style.display = "none";
-		document.getElementById('day').style.display = "none";		
+		document.getElementById('day').style.display = "none";
 		document.getElementById('iconblocks').style.display = "none";
-		
+
 		var navbar = document.createElement("nav");
-		navbar.setAttribute("id","navId");		
+		navbar.setAttribute("id","navId");
 		var div1 = document.createElement("div");
 		div1.setAttribute("id","returnDiv");
 		div1.innerHTML = "<";
@@ -91,46 +98,95 @@
 		body.appendChild(navbar);
 
 		//implement the video element
+		var v = document.createElement("video");
+		v.setAttribute("id","videoId");
+		v.setAttribute("controls","controls");
+
+		var s = document.createElement("source");
+		s.setAttribute("src","Garfield.mp4");
+		s.setAttribute("type","video/mp4");
+
+		v.appendChild(s);
+
+		document.body.appendChild(v);
 
 
 	}
-	
+
 
 	function openPhotos(){
-		
-		//make time, day, app icons disappear
+		document.getElementById('time').style.display = "none";
+		document.getElementById('day').style.display = "none";
+		document.getElementById('iconblocks').style.display = "none";
 
-		//create the navigation bar
-		
-		//create the canvas element with a photo displayed on it
+
+		var navbar = document.createElement("nav");
+		navbar.setAttribute("id","navId");
+		var div1 = document.createElement("div");
+		div1.setAttribute("id","returnDiv");
+		div1.innerHTML = "<";
+		div1.setAttribute("onclick","return2HomeScreen()");
+
+		var div2 = document.createElement("div");
+		div2.setAttribute("id","prev");
+		div2.innerHTML = "Previous";
+		div2.setAttribute("onclick","previousPhoto()");
+
+		var div3 = document.createElement("div");
+		div3.setAttribute("id","next");
+		div3.innerHTML = "Next";
+		div3.setAttribute("onclick","nextPhoto()");
+
+		navbar.appendChild(div1);
+		navbar.appendChild(div2);
+		navbar.appendChild(div3);
+
+		var c = document.createElement("canvas");
+		c.setAttribute("id","myCanvas");
+		c.setAttribute("width","272");
+		c.setAttribute("height","457");
+		c.setAttribute("style","border:0px solid #FFFFFF;");
+
+		var body =  document.getElementsByTagName("body")[0];
+		body.appendChild(navbar);
+		body.appendChild(c);
+
+
+ 		/*facing error here*/
+		var ctx = c.getContext("2d");
+		var img = photo_list[global_photo_index];
+		ctx.drawImage(img,0,0,272,457);
+
+
+
 
 	}
-	
-	
+
+
 	function previousPhoto(){
-		
-		
+
+
 	}
-	
+
 
 	function nextPhoto(){
-		
-		
-	}
-	
 
-	function return2HomeScreen() {	
+
+	}
+
+
+	function return2HomeScreen() {
 		var ele = document.getElementById('navId');
 		if(ele){
 			ele.parentElement.removeChild(ele);
 		}
-		
+
 		//remove video and canvas elements if they exist
-		
+
 		//make time, day, app icons re-appear
-	}	
-	
+	}
+
 </script>
-	
+
 </body>
 </html>
