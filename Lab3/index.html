@@ -74,13 +74,11 @@
 	function drop(ev) {
 		ev.preventDefault();
 		var data = ev.dataTransfer.getData("Text");
-		/*if (document.getElementById(ev.currentTarget.id).children.length == 0){
+		/*if (document.getElementById(ev.currentTarget.id).hasChildNodes()){
 			ev.currentTarget.appendChild(document.getElementById(data));
-		}*/
-		ev.currentTarget.appendChild(document.getElementById(data)) /*fix error*/
+		} */
+		ev.currentTarget.appendChild(document.getElementById(data)) //fix error*/
 	}
-
-
 
 	function openVideo() {
 		document.getElementById('time').style.display = "none";
@@ -112,7 +110,6 @@
 
 
 	}
-
 
 	function openPhotos(){
 		document.getElementById('time').style.display = "none";
@@ -152,25 +149,30 @@
 		body.appendChild(c);
 
 
- 		/*facing error here*/
 		var ctx = c.getContext("2d");
-		var img = photo_list[global_photo_index];
-		ctx.drawImage(img,0,0,272,457);
+		var img = new Image();
+		img.onload = function(){
+			ctx.drawImage(img,0,0,272,457)
+		}
+		img.src = photo_list[global_photo_index];
 
 
 
 
 	}
-
 
 	function previousPhoto(){
-
-
+		if (global_photo_index > 0){
+			global_photo_index = global_photo_index-1;
+		}
+		openPhotos();
 	}
 
-
 	function nextPhoto(){
-
+		if (global_photo_index < 3){
+			global_photo_index = global_photo_index+1;
+		}
+		openPhotos();
 
 	}
 
@@ -182,8 +184,20 @@
 		}
 
 		//remove video and canvas elements if they exist
+		var eme = document.getElementById('myCanvas');
+		if(eme){
+			eme.parentElement.removeChild(eme);
+		}
+		var eve = document.getElementById('"videoId');
+		if(eve){
+			eve.parentElement.removeChild(eve);
+		}
 
 		//make time, day, app icons re-appear
+		document.getElementById('time').style.display = "block";
+		document.getElementById('day').style.display = "block";
+		document.getElementById('iconblocks').style.display = "block";
+
 	}
 
 </script>
