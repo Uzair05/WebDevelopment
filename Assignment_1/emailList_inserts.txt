@@ -1,0 +1,24 @@
+db.emailList.insert({'sender':'amy@cs.hku.hk','recipient':'john@cs.hku.hk','title':'Meeting today','time':'20:32:01 Fri Oct 11 2019', 'content':'Shall we meet at the library at 5pm?','mailbox':'Inbox'})
+db.emailList.insert({'sender':'professor@cs.hku.hk','recipient':'u3560@hku.hk','title':'Assignment','time':'16:20:00 Thu Oct 10 2019', 'content':'The new assignment has been released','mailbox':'Inbox'})
+db.emailList.insert({'sender':'johnsnow@gmail.com','recipient':'u3560307@hku.hk','title':'My new movie','time':'01:00:00 Mon Oct 7 2019', 'content':'Do you want to watch my new movie with me','mailbox':'Inbox'})
+
+db.emailList.insert({'sender':'jkrowling@fin.hku.hk','recipient':'u3560307@hku.hk','title':'My new Book','time':'15:30:07 Thu Oct 10 2019', 'content':'Do you want to read the new book i wrote?','mailbox':'Important'})
+db.emailList.insert({'sender':'donaldtrump@whitehouse.us','recipient':'u3560307@hku.hk','title':'I quit','time':'00:00:07 Tue Oct 5 2019', 'content':'I'm quitting this job!','mailbox':'Important'})
+db.emailList.insert({'sender':'postmaster@nobel.no','recipient':'u3560307@hku.hk','title':'Congratrulations!!','time':' 00:00:00 Sun Nov 3 2019', 'content':'Congratulations on winning the nobel prize!','mailbox':'Important'})
+
+db.emailList.insert({'sender':'u3560307@hku.hk','recipient':'postmaster@nobel.no','title':'Response','time':'00:00:00 Mon Nov 4 2019', 'content':'Thank you!','mailbox':'Sent'})
+db.emailList.insert({'sender':'u3560307@hku.hk','recipient':'donaldtrump@whitehouse.us','title':'Good Luck','time':'00:00:00 Mon Nov 4 2019', 'content':'Good luck at your new job','mailbox':'Sent'})
+db.emailList.insert({'sender':'u3560307@hku.hk','recipient':'barackobama','title':'Yo, hello','time':'00:00:00 Mon Nov 4 2019', 'content':'GGEZ','mailbox':'Sent'})
+
+db.emailList.insert({'sender':'bocsoc@hku.hk','recipient':'u3560307@hku.hk','title':'Scam 1','time':'01:00:00 Mon Nov 4 2019', 'content':'Scammed you 1','mailbox':'Trash'})
+db.emailList.insert({'sender':'bocsoc@hku.hk','recipient':'u3560307@hku.hk','title':'Scam 2','time':'02:00:00 Mon Nov 4 2019', 'content':'Scammed you 2','mailbox':'Trash'})
+db.emailList.insert({'sender':'bocsoc@hku.hk','recipient':'u3560307@hku.hk','title':'Scam 3','time':'03:00:00 Mon Nov 4 2019', 'content':'Scammed you 3','mailbox':'Trash'})
+
+
+
+Template:
+db.emailList.insert({'sender':'','recipient':'','title':'','time':'', 'content':'','mailbox':''})
+
+
+db.emailList.insert({'Name':'Uzair','Hello':'Hitler'})
+db.emailList.insert({'Name':'Umair','Hello':'Stalin'})
