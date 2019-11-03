@@ -14,23 +14,23 @@
 		<div id="button_all" class="buttons" onclick="showAll()">
 			<p> Show All</p>
 		</div>
-		
-		<input id="stockcode" type="text"> 		
+
+		<input id="stockcode" type="text">
 		<div class="buttons" onclick="filterS()">
 			<p>Filter by Stockcode</p>
 		</div>
-		
-		<input id="category" type="text"> 
+
+		<input id="category" type="text">
 		<div class="buttons" onclick="filterC()">
 			<p>Filter by Category</p>
 		</div>
     </div>
-    
+
     <script>
-		
+
 		function showAll() {
 			var xmlhttp = new XMLHttpRequest();
-			
+
 			xmlhttp.onreadystatechange = function () {
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 					var stocks = document.getElementById("entries");
@@ -39,45 +39,45 @@
 			}
 			xmlhttp.open("GET", "GetEntries?show=all", true);
 			xmlhttp.send();
-			
+
 			document.getElementById("button_all").style.display = "none";
       	}
 
       	function filterS() {
 			var xmlhttp = new XMLHttpRequest();
-			
+
 			xmlhttp.onreadystatechange = function () {
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 					var stocks = document.getElementById("entries");
 					stocks.innerHTML = xmlhttp.responseText;
 				}
 			}
-			
+
 			var stockCode = document.getElementById("stockcode").value;
 			xmlhttp.open("GET", "GetEntries?show=stockcode&value="+stockCode,true);
 			xmlhttp.send();
-			
+
 			document.getElementById("button_all").style.display = "block";
 
       	}
 
       	function filterC() {
 			var xmlhttp = new XMLHttpRequest();
-			
+
 			xmlhttp.onreadystatechange = function () {
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 					var stocks = document.getElementById("entries");
 					stocks.innerHTML = xmlhttp.responseText;
 				}
 			}
-			
+
 			var category = document.getElementById("category").value;
 			xmlhttp.open("GET", "GetEntries?show=category&value="+category,true);
 			xmlhttp.send();
-			
+
 			document.getElementById("button_all").style.display = "block";
       	}
-		
+
 		function changeState(elem) {
 			var oldValue = elem.innerHTML;
 			var newvalue;
@@ -88,9 +88,9 @@
 			} else {
 				newvalue = 'RISE';
 			}
-			
+
 			var xmlhttp = new XMLHttpRequest();
-			
+
 			xmlhttp.onreadystatechange = function () {
 				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
 					elem.innerHTML = xmlhttp.responseText;
@@ -101,7 +101,7 @@
 			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			xmlhttp.send("newValue="+newvalue+"&id="+itemID);
 		}
-		
+
     </script>
   </body>
 </html>

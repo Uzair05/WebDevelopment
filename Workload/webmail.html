@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My web mail</title>
+
+<style type="text/css" >
+
+  #mailBox{
+    text-align: center;
+    overflow: auto;
+    display: inline-block;
+    height: auto;
+    width: 100px;
+    margin-left: 0px;
+    float: left;
+    border-style: solid;
+    border-color: black;
+  }
+  #email{
+    text-align: center;
+    display:inline-block;
+    overflow: auto;
+    height: auto;
+    margin-left: 5px;
+    margin-right:auto;
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    position: static;
+    border-style: solid;
+    border-color: black;
+  }
+  #heading{
+    text-align: center;
+  }
+
+
+
+</style>
+
+</head>
+<body  onload="LoadInbox();">
+
+<header id="heading">
+<h1>Uzair Email Service</h1>
+</header>
+
+<div id="function">
+<button type="button" id="Compose">
+  Compose
+</button>
+<button type="button" id="Move">
+  Move to...
+</button>
+<button type="button" id="left">
+  <
+</button>
+<button type="button" id="right">
+  >
+</button>
+
+</div>
+
+<nav id="mailBox">
+  <div id="Inbox">Inbox</div>
+  <div id="Important">Important</div>
+  <div id="Sent">Sent</div>
+  <div id="Trash">Trash</div>
+</nav>
+
+<div id="email">
+</div>
+
+
+<script>
+
+  function LoadInbox(){
+    var xmlhttp = new XMLHttpRequest();
+    var holder={};
+    xmlhttp.onreadystatechange = function(){
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+        holder = JSON.parse(xml.responseText);
+      }
+    }
+
+    for(var i=0;i<holder.length; ++i){
+      var a = document.createElement("input");
+      a.setAttribute("name",holder[i]._id);
+      a.innerHTML = holder[i].sender + " " + holder[i].title + " " + holder[i].time;
+      document.getElementById("email").appendChild(a);
+    }
+
+
+    xmlhttp.open("GET","mail?mailBox=Inbox",true);
+    xmlhttp.send();
+  }
+
+</script>
+</body>
+</html>

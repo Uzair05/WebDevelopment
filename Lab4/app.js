@@ -7,7 +7,7 @@ var db = monk('localhost:27017/lab4');
 //auxillary function for generating the HTML content
 function ResHTML(docs) {
 	var response_string = "";
-	
+
 	for (var i = 0; i < docs.length; i++) {
 		var stock = docs[i];
 		response_string += "<div id="+stock['_id']+">";
@@ -15,12 +15,12 @@ function ResHTML(docs) {
 		response_string += " (" + stock['category'] + ")</h3><h5>(" + stock['stockcode'] + ") on " + stock['date'] + "</h5>";
 		response_string += "</div>";
 	}
-	
+
 	return response_string;
 }
 
 // allow retrieval of static files and make db accessible to router
-app.use(express.static('public'), function(req,res,next){	
+app.use(express.static('public'), function(req,res,next){
     req.db = db;
     next();
 })
@@ -29,10 +29,10 @@ app.use(express.static('public'), function(req,res,next){
 app.get('/GetEntries', function(req, res){
 	var db = req.db;
 	var collection = db.get('stockList');
-	
+
 	var show = req.query.show;
 	var value = req.query.value;
-	
+
 	if(show == "all"){
 		collection.find({}, {}, function(err, docs){
 			if (err === null){
@@ -44,13 +44,13 @@ app.get('/GetEntries', function(req, res){
 			if (err === null){
 				res.send(ResHTML(docs));
 			} else res.send(err);
-		})		
+		})
 	} else if (show == "stockcode"){
 		collection.find({"stockcode":value}, {}, function(err, docs){
 			if (err === null){
 				res.send(ResHTML(docs));
 			} else res.send(err);
-		})		
+		})
 	}
 })
 
@@ -58,10 +58,10 @@ app.get('/GetEntries', function(req, res){
 app.post('/updateState', express.urlencoded({ extended: true }), function(req, res){
 	var db = req.db;
 	var collection = db.get('stockList');
-	
+
 	var id = req.body.id;
 	var newValue = req.body.newValue;
-	
+
 	collection.update({"_id":id}, {$set:{'status':newValue}}, function(err, docs){
 		if (err === null) {
 			res.send(newValue);
