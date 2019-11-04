@@ -26,40 +26,33 @@
 		</div>
     </div>
 
-    <script>
+<script>
+  function showAll() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        var stocks = document.getElementById("entries");
+        stocks.innerHTML = xmlhttp.responseText;
+      }
+    }
+    xmlhttp.open("GET", "GetEntries?show=all", true);
+    xmlhttp.send();
+    document.getElementById("button_all").style.display = "none";
+  }
 
-		function showAll() {
-			var xmlhttp = new XMLHttpRequest();
-
-			xmlhttp.onreadystatechange = function () {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					var stocks = document.getElementById("entries");
-					stocks.innerHTML = xmlhttp.responseText;
-				}
-			}
-			xmlhttp.open("GET", "GetEntries?show=all", true);
-			xmlhttp.send();
-
-			document.getElementById("button_all").style.display = "none";
-      	}
-
-      	function filterS() {
-			var xmlhttp = new XMLHttpRequest();
-
-			xmlhttp.onreadystatechange = function () {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					var stocks = document.getElementById("entries");
-					stocks.innerHTML = xmlhttp.responseText;
-				}
-			}
-
-			var stockCode = document.getElementById("stockcode").value;
-			xmlhttp.open("GET", "GetEntries?show=stockcode&value="+stockCode,true);
-			xmlhttp.send();
-
-			document.getElementById("button_all").style.display = "block";
-
-      	}
+  function filterS() {
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function () {
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+        var stocks = document.getElementById("entries");
+        stocks.innerHTML = xmlhttp.responseText;
+      }
+    }
+    var stockCode = document.getElementById("stockcode").value;
+    xmlhttp.open("GET", "GetEntries?show=stockcode&value="+stockCode,true);
+    xmlhttp.send();
+    document.getElementById("button_all").style.display = "block";
+  }
 
       	function filterC() {
 			var xmlhttp = new XMLHttpRequest();
@@ -78,29 +71,25 @@
 			document.getElementById("button_all").style.display = "block";
       	}
 
-		function changeState(elem) {
-			var oldValue = elem.innerHTML;
-			var newvalue;
-			var itemID = elem.parentNode.getAttribute('id');
-
-			if (oldValue == 'RISE') {
-				newvalue = 'FALL';
-			} else {
-				newvalue = 'RISE';
-			}
-
-			var xmlhttp = new XMLHttpRequest();
-
-			xmlhttp.onreadystatechange = function () {
-				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-					elem.innerHTML = xmlhttp.responseText;
-				}
-			}
-
-			xmlhttp.open("POST", "updateState", true);
-			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-			xmlhttp.send("newValue="+newvalue+"&id="+itemID);
-		}
+function changeState(elem) {
+  var oldValue = elem.innerHTML;
+  var newvalue;
+  var itemID = elem.parentNode.getAttribute('id');
+  if (oldValue == 'RISE') {
+    newvalue = 'FALL';
+  } else {
+    newvalue = 'RISE';
+  }
+  var xmlhttp = new XMLHttpRequest();
+  xmlhttp.onreadystatechange = function () {
+    if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+      elem.innerHTML = xmlhttp.responseText;
+    }
+  }
+  xmlhttp.open("POST", "updateState", true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("newValue="+newvalue+"&id="+itemID);
+}
 
     </script>
   </body>

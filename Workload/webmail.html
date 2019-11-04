@@ -40,7 +40,7 @@
 </style>
 
 </head>
-<body  onload="LoadInbox();">
+<body  onload="LoadInbox('Inbox');">
 
 <header id="heading">
 <h1>Uzair Email Service</h1>
@@ -63,10 +63,10 @@
 </div>
 
 <nav id="mailBox">
-  <div id="Inbox">Inbox</div>
-  <div id="Important">Important</div>
-  <div id="Sent">Sent</div>
-  <div id="Trash">Trash</div>
+  <div id="Inbox" onclick="LoadInbox('Inbox');">Inbox</div>
+  <div id="Important" onclick="LoadInbox('Important');">Important</div>
+  <div id="Sent" onclick="LoadInbox('Sent');">Sent</div>
+  <div id="Trash" onclick="LoadInbox('Trash');">Trash</div>
 </nav>
 
 <div id="email">
@@ -74,27 +74,33 @@
 
 
 <script>
+  //auxillary function for generating the HTML content
+  function ResHTML(docs) {
+    var response_string = "";
+    for (var i = 0; i < docs.length; i++) {
+      var email = docs[i];
+      response_string += "<div><input type=\"checkbox\" name="+email['_id']+">";
+      response_string += email['sender'] + " " + email['title'] + " " + email['time'];
+      response_string += "</input></div>";
+    }
+    return response_string;
+  }
 
-  function LoadInbox(){
+  function LoadInbox(poh){
     var xmlhttp = new XMLHttpRequest();
     var holder={};
     xmlhttp.onreadystatechange = function(){
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-        holder = JSON.parse(xml.responseText);
+        holder = xml.responseText
       }
     }
 
-    for(var i=0;i<holder.length; ++i){
-      var a = document.createElement("input");
-      a.setAttribute("name",holder[i]._id);
-      a.innerHTML = holder[i].sender + " " + holder[i].title + " " + holder[i].time;
-      document.getElementById("email").appendChild(a);
-    }
+    document.getElementById("email").innerHTML = ResHTML(holder);
 
-
-    xmlhttp.open("GET","mail?mailBox=Inbox",true);
+    xmlhttp.open("GET","inbox?mailBox=" + poh,true);
     xmlhttp.send();
   }
+
 
 </script>
 </body>

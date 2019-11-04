@@ -3,7 +3,7 @@ db.emailList.insert({'sender':'professor@cs.hku.hk','recipient':'u3560@hku.hk','
 db.emailList.insert({'sender':'johnsnow@gmail.com','recipient':'u3560307@hku.hk','title':'My new movie','time':'01:00:00 Mon Oct 7 2019', 'content':'Do you want to watch my new movie with me','mailbox':'Inbox'})
 
 db.emailList.insert({'sender':'jkrowling@fin.hku.hk','recipient':'u3560307@hku.hk','title':'My new Book','time':'15:30:07 Thu Oct 10 2019', 'content':'Do you want to read the new book i wrote?','mailbox':'Important'})
-db.emailList.insert({'sender':'donaldtrump@whitehouse.us','recipient':'u3560307@hku.hk','title':'I quit','time':'00:00:07 Tue Oct 5 2019', 'content':'I'm quitting this job!','mailbox':'Important'})
+db.emailList.insert({'sender':'donaldtrump@whitehouse.us','recipient':'u3560307@hku.hk','title':'I quit','time':'00:00:07 Tue Oct 5 2019', 'content':'Im quitting this job!','mailbox':'Important'})
 db.emailList.insert({'sender':'postmaster@nobel.no','recipient':'u3560307@hku.hk','title':'Congratrulations!!','time':' 00:00:00 Sun Nov 3 2019', 'content':'Congratulations on winning the nobel prize!','mailbox':'Important'})
 
 db.emailList.insert({'sender':'u3560307@hku.hk','recipient':'postmaster@nobel.no','title':'Response','time':'00:00:00 Mon Nov 4 2019', 'content':'Thank you!','mailbox':'Sent'})
