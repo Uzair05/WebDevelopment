@@ -72,7 +72,7 @@
 <div id="email">
 </div>
 
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
   //auxillary function for generating the HTML content
   function ResHTML(docs) {
@@ -91,7 +91,7 @@
     var holder={};
     xmlhttp.onreadystatechange = function(){
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-        holder = xml.responseText
+        holder = xmlhttp.responseText
       }
     }
 

@@ -20,14 +20,14 @@ app.get('/webmail.html', function (req, res) {
    res.sendFile( __dirname + "/public/" + "webmail.html" );
 })
 
-app.get('/inbox',function(res,req){
+app.get('/inbox',function(req, res){
   var db = req.db;
   var collection = db.get('emailList');
   var box = req.query.mailBox;
 
 	collection.find({}, {}, function(err,docs){
     if (err === null){
-			res.json(docs);
+			res.send(docs);
 		}else{
 			res.send(err);
 		}
