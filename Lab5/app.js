@@ -5,7 +5,7 @@ var monk = require('monk');
 var db = monk('localhost:27017/lab4');
 
 // allow retrieval of static files and make db accessible to router
-app.use(express.static('public'), function(req,res,next){	
+app.use(express.static('public'), function(req,res,next){
     req.db = db;
     next();
 })
@@ -14,10 +14,10 @@ app.use(express.static('public'), function(req,res,next){
 app.get('/GetEntries', function(req, res){
 	var db = req.db;
 	var collection = db.get('stockList');
-	
+
 	var show = req.query.show;
 	var value = req.query.value;
-	
+
 	if(show == "all"){
 		collection.find({}, {}, function(err, docs){
 			if (err === null){
@@ -30,13 +30,13 @@ app.get('/GetEntries', function(req, res){
 			if (err === null){
 				res.json(docs);
 			} else res.send(err);
-		})		
+		})
 	} else if (show == "stockcode"){
 		collection.find({"stockcode":value}, {}, function(err, docs){
 			if (err === null){
 				res.json(docs);
 			} else res.send(err);
-		})		
+		})
 	}
 })
 
@@ -44,10 +44,10 @@ app.get('/GetEntries', function(req, res){
 app.post('/updateState', express.urlencoded({ extended: true }), function(req, res){
 	var db = req.db;
 	var collection = db.get('stockList');
-	
+
 	var id = req.body.id;
 	var newValue = req.body.newValue;
-	
+
 	collection.update({"_id":id}, {$set:{'status':newValue}}, function(err, docs){
 		if (err === null) {
 			res.send(newValue);
@@ -57,9 +57,18 @@ app.post('/updateState', express.urlencoded({ extended: true }), function(req, r
 
 //router to handle HTTP POST request for "CreateEntries"
 app.post('/CreateEntries', express.urlencoded({ extended: true }), function(req, res){
-	
-	//to complete	
-		
+  var db = req.db;
+	var collection = db.get('stockList');
+
+  var stockname = req.body.stockname;
+  var stockcode = req.body.stockcode;
+  var category = req.body.category;
+  var status = req.body.status;
+
+  var d = new Date();
+  var date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+
+  collection.insert({'stockname':stockname, 'stockcode':stockcode, 'category':category, 'date':date, 'status':status,});
 })
 
 var server = app.listen(8081, function () {

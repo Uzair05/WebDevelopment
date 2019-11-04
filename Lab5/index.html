@@ -14,70 +14,94 @@
 		<div id="button_all" class="buttons">
 			<p> Show All</p>
 		</div>
-		
-		<input id="stockcode" type="text"> 		
+
+		<input id="stockcode" type="text">
 		<div class="buttons" id="FS">
 			<p>Filter by Stockcode</p>
 		</div>
-		
-		<input id="category" type="text"> 
+
+		<input id="category" type="text">
 		<div class="buttons" id="FC">
 			<p>Filter by Category</p>
 		</div>
-		
+
 		<input type="text" id="new_stockname" placeholder="Stock name"><br>
 		<input type="text" id="new_stockcode" placeholder="Stock code"><br>
 		<input type="text" id="new_category" placeholder="Category"><br>
-		<input type="text" id="new_status"placeholder="Status"><br>
-		
+		<input type="text" id="new_status" placeholder="Status"><br>
+
 		<div class="buttons" id="createEntry">
 			<p>Add New Entry</p>
 		</div>
     </div>
-	
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	
+
     <script>
 		$(document).ready(function () {
 		    showAll();
-	
+
 		    $("#button_all").click(showAll);
-	
-		    $("#FS").click(function () {				 
-				//to complete		
-		    });
+
+		    $("#FS").click(function () {
+  				$("#button_all").show();
+          $.getJSON("GetEntries",{'show':'stockcode','value':$("#stockcode").val()},function(result){
+            showEntries(result);
+          });
+        });
 
 
 		    $("#FC").click(function () {
-				//to complete	
+          $("#button_all").show();
+          $.getJSON("GetEntries",{'show':'category','value':$("#category").val()},function(result){
+            showEntries(result);
+          });
 		    });
 
 
 		    $("#createEntry").click(function(){
-				//to complete
-		    });    	
+				$.post("CreateEntries",{'stockname':$("#new_stockname").val(), 'stockcode':$("#new_stockcode").val(), 'category':$("#new_category").val(), 'status':$("#new_status").val()});
+        showAll();
+        $("#new_stockname").val("");
+        $("#new_stockcode").val("");
+        $("#new_category").val("");
+        $("#new_status").val("");
+		    });
 	});
 
 
 	function showAll() {
-		//complete
+    $("#button_all").hide();
+    $.get("GetEntries?show=all",function(data,status){
+      $("#entries").html(showEntries(data));
+    });
 	}
-	
-	function showEntries(data){
-		$("#entries").empty(); 
-        $.each(data, function(i, item){
-    		var txt = "<div id="+item['_id']+">";
-   			txt += "<span onclick=\"changeState(this)\">"+item['status']+"</span><h3>"+item['stockname']+" ("+"</h3><h3>"+item['category']+" )</h3><h5>("+item['stockcode']+") on "+item['date']+"</h5>";
-  			txt+= "</div>";
-			
-			$("#entries").append(txt);
-        });	  
+
+  function showEntries(data){
+    $("#entries").empty();
+    $.each(data, function(i, item){
+      var txt = "<div id="+item['_id']+">";
+      txt += "<span onclick=\"changeState(this)\">"+item['status']+"</span><h3>"+item['stockname']+" ("+"</h3><h3>"+item['category']+" )</h3><h5>("+item['stockcode']+") on "+item['date']+"</h5>";
+      txt+= "</div>";
+      $("#entries").append(txt);
+    });
+  }
+
+	function changeState(elem) { //buggy
+    var oldValue = $(elem).html;
+    var newvalue;
+    var itemID = $(elem).parent().attr('id');
+
+    if (oldValue === 'RISE') {
+      newvalue = 'FALL';
+    } else {
+      newvalue = 'RISE';
+    }
+
+    $(elem).empty();
+	  $(elem).load("updateState",{'newValue':newvalue,'id':itemID});
 	}
-	
-	function changeState(elem) {
-	    //to complerte
-	}
-		
-    </script>
-  </body>
+
+</script>
+</body>
 </html>
