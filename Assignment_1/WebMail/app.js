@@ -25,7 +25,7 @@ app.get('/inbox',function(req, res){
   var collection = db.get('emailList');
   var box = req.query.mailBox;
 
-	collection.find({}, {}, function(err,docs){
+	collection.find({'mailbox':box}, {}, function(err,docs){
     if (err === null){
 			res.send(docs);
 		}else{
@@ -34,6 +34,33 @@ app.get('/inbox',function(req, res){
   });
 })
 
+app.get('/Update',function(req,res){
+  var db = req.db;
+  var collection = db.get('emailList');
+  var id = req.query.id;
+  var box = req.query.mailBox;
+
+  collection.update({"_id":id}, {$set:{'mailbox':box}}, function(err, docs){
+		if (err === null) {
+			res.send("OK");
+		} else res.send(err);
+	})
+
+})
+
+app.get('/Email',function(req, res){
+  var db = req.db;
+  var collection = db.get('emailList');
+  var id = req.query.id;
+
+	collection.find({'_id':id}, {}, function(err,docs){
+    if (err === null){
+			res.send(docs);
+		}else{
+			res.send(err);
+		}
+  });
+})
 
 
 
