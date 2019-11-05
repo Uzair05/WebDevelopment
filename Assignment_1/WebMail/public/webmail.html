@@ -40,7 +40,6 @@
     display: inline-block;
   }
 
-
   .dropdown {
   position: relative;
   display: inline-block;
@@ -69,7 +68,7 @@
 <h1>Uzair Email Service</h1>
 </header>
 <div id="function">
-  <button type="button" id="Compose">
+  <button type="button" id="Compose" onclick="LoadCompose();">
     Compose
   </button>
 
@@ -208,7 +207,6 @@
     xmlhttp.open("GET","Update?mailBox=" + mailBox + "&id=" + id,true);
     xmlhttp.send();
   }
-
   function LoadEmail(id){
     //clears mailbox
 
@@ -226,7 +224,6 @@
     xmlhttp.open("GET","Email?id=" + id,true);
     xmlhttp.send();
   }
-
   function ResEmail(mood){
     var docs = mood[0];
     var response_string = "";
@@ -237,11 +234,24 @@
   }
 
   function LoadCompose(){
+    cleanColour();
+    var response_string="";
     var email = document.getElementById("email");
-    email.innerHTML = "";
-    //email.innerHTML = compose mail
+    response_string += "New Message <br>";
+    response_string += "To: <input type=\"text\" style=\"margin-left: 40px;position:relative;\" id=\"recipient\"><br>";
+    response_string += "Subject: <input type=\"text\" style=\"margin-left: 09px;position:relative;\" id=\"title\"><br>";
+    response_string += "<textarea id=\"content\" name=\"content\"></textarea><br><br>";
+    response_string += "<button type=\"button\" onclick=\"PostMan();\">Send</button>";
+    email.innerHTML = response_string;
   }
 
+  function PostMan(){
+    var recipient = document.getElementById("recipient");
+    var title = document.getElementById("title");
+    var content = document.getElementById("content");
+
+    $.post("NewMail",{'recipient':recipient,'title':title, 'content':content},LoadInbox('Sent'));
+  }
 
 </script>
 </body>

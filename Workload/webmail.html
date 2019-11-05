@@ -17,8 +17,9 @@
     border-color: black;
   }
   #email{
-    text-align: center;
+    text-align:justify;
     display:inline-block;
+    width: 500px;
     overflow: auto;
     height: auto;
     margin-left: 5px;
@@ -35,7 +36,28 @@
     text-align: center;
   }
 
+  .hope{
+    display: inline-block;
+  }
 
+  .dropdown {
+  position: relative;
+  display: inline-block;
+  }
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 100px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
+  }
+
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
 
 </style>
 
@@ -45,62 +67,191 @@
 <header id="heading">
 <h1>Uzair Email Service</h1>
 </header>
-
 <div id="function">
-<button type="button" id="Compose">
-  Compose
-</button>
-<button type="button" id="Move">
-  Move to...
-</button>
-<button type="button" id="left">
-  <
-</button>
-<button type="button" id="right">
-  >
-</button>
+  <button type="button" id="Compose" onclick="LoadCompose();">
+    Compose
+  </button>
 
+
+  <button type="button" id="Move" class="dropdown">
+    <span>Move to...</span>
+    <div class="dropdown-content">
+      <a onclick="MoveHot('Inbox');">Inbox</a>
+      <div class="dropdown-content">
+        <a onclick="MoveHot('Important');">Important!</a>
+        <div class="dropdown-content">
+          <a onclick="MoveHot('Sent');">Sent</a>
+          <div class="dropdown-content">
+            <a onclick="MoveHot('Trash');">Trash</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </button>
+
+  <button type="button" id="left" onclick="countB();">
+    <
+  </button>
+  <button type="button" id="right" onclick="countF();">
+    >
+  </button>
 </div>
-
 <nav id="mailBox">
-  <div id="Inbox" onclick="LoadInbox('Inbox');">Inbox</div>
-  <div id="Important" onclick="LoadInbox('Important');">Important</div>
-  <div id="Sent" onclick="LoadInbox('Sent');">Sent</div>
-  <div id="Trash" onclick="LoadInbox('Trash');">Trash</div>
+  <div id="Inbox" onclick="LoadInbox('Inbox');countClean();">Inbox</div>
+  <div id="Important" onclick="LoadInbox('Important');countClean();">Important</div>
+  <div id="Sent" onclick="LoadInbox('Sent');countClean();">Sent</div>
+  <div id="Trash" onclick="LoadInbox('Trash');countClean();">Trash</div>
 </nav>
+
 
 <div id="email">
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
-  //auxillary function for generating the HTML content
-  function ResHTML(docs) {
-    var response_string = "";
-    for (var i = 0; i < docs.length; i++) {
-      var email = docs[i];
-      response_string += "<div><input type=\"checkbox\" name="+email['_id']+">";
-      response_string += email['sender'] + " " + email['title'] + " " + email['time'];
-      response_string += "</input></div>";
-    }
-    return response_string;
-  }
+  var count = 0;
+  var currentMailBox='';
 
+  function countF(){
+    count+=1;
+    LoadInbox(currentMailBox);
+  }
+  function countB(){
+    count-=1;
+
+    if (count<0){
+      count=0;
+    }
+    LoadInbox(currentMailBox);
+  }
+  function countClean(){
+    count=0;
+  }
+  function setBox(box){
+    currentMailBox = box;
+  }
+  function cleanColour(){
+    document.getElementById("Inbox").style.backgroundColor = "white";
+    document.getElementById("Important").style.backgroundColor = "white";
+    document.getElementById("Sent").style.backgroundColor = "white";
+    document.getElementById("Trash").style.backgroundColor = "white";
+  }
   function LoadInbox(poh){
+    setBox(poh);
+    //clears mailbox
+    document.getElementById("email").innerHTML = "";
     var xmlhttp = new XMLHttpRequest();
-    var holder={};
     xmlhttp.onreadystatechange = function(){
       if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-        holder = xmlhttp.responseText
+        var holder = JSON.parse(xmlhttp.responseText)
+        //Appends response_string to email division
+        document.getElementById("email").innerHTML = ResHTML(holder);
+        cleanColour();
+        document.getElementById(poh).style.backgroundColor = "#bfbfbf";
+
       }
     }
-
-    document.getElementById("email").innerHTML = ResHTML(holder);
-
     xmlhttp.open("GET","inbox?mailBox=" + poh,true);
     xmlhttp.send();
   }
+  //auxillary function for generating the HTML content
+  function ResHTML(docs) {
+    var response_string = "";
 
+    var number_of_messages = 10;
+
+    var ubound = ((count+1)*number_of_messages);
+    if (ubound>docs.length){
+      ubound = docs.length;
+    }
+    var lbound=(count*number_of_messages);
+    if (lbound>docs.length){
+      lbound = docs.length;
+    }
+
+
+
+    for (var i = lbound; (lbound <= i) && (i < ubound); i++) {
+      var email = docs[i];
+      response_string += "<input type=\"checkbox\" id="+email['_id']+">" + "<div class=\"hope\" onclick=\"LoadEmail("+"\'"+email['_id']+"\'"+");\">";
+      response_string += email['sender'] + " " + email['title'] + " " + email['time'];
+      response_string += "</div></input><br>";
+    }
+    return response_string;
+  }
+  function MoveHot(mailBox){
+    var Topple = [];
+    var mode = document.getElementById("email").childNodes;
+    var len = mode.length;
+
+    for(var i = 0;i<len;++i){
+      if (mode[i].checked == true){
+        Topple.push(mode[i].id);
+      }
+    }
+
+    for(var i=0;i<Topple.length;++i){
+      Update(Topple[i],mailBox);
+    }
+
+  }
+  function Update(id,mailBox){
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+        if(xmlhttp.responseText == 'OK'){
+          LoadInbox(currentMailBox);
+        }
+      }
+    }
+    xmlhttp.open("GET","Update?mailBox=" + mailBox + "&id=" + id,true);
+    xmlhttp.send();
+  }
+  function LoadEmail(id){
+    //clears mailbox
+
+
+    document.getElementById("email").innerHTML = "";
+    var xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = function(){
+      if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
+        var holder = JSON.parse(xmlhttp.responseText);
+        //Appends response_string to email division
+        document.getElementById("email").innerHTML = ResEmail(holder);
+        cleanColour();
+      }
+    }
+    xmlhttp.open("GET","Email?id=" + id,true);
+    xmlhttp.send();
+  }
+  function ResEmail(mood){
+    var docs = mood[0];
+    var response_string = "";
+    response_string += "<span style=\"float:left;\">" + docs['title'] + "</span><span style=\"float:right;\">" + docs['time'] + "</span><br>" + docs['sender'] + "<br>" + docs['recipient'] + "<br>";
+    response_string += "<br>" + docs['content'];
+
+    return response_string;
+  }
+
+  function LoadCompose(){
+    cleanColour();
+    var response_string="";
+    var email = document.getElementById("email");
+    response_string += "New Message <br>";
+    response_string += "To: <input type=\"text\" style=\"margin-left: 40px;position:relative;\" id=\"recipient\"><br>";
+    response_string += "Subject: <input type=\"text\" style=\"margin-left: 09px;position:relative;\" id=\"title\"><br>";
+    response_string += "<textarea id=\"content\" name=\"content\"></textarea><br><br>";
+    response_string += "<button type=\"button\" onclick=\"PostMan();\">Send</button>";
+    email.innerHTML = response_string;
+  }
+
+  function PostMan(){
+    var recipient = document.getElementById("recipient");
+    var title = document.getElementById("title");
+    var content = document.getElementById("content");
+
+    $.post("NewMail",{'recipient':recipient,'title':title, 'content':content},LoadInbox('Sent'));
+  }
 
 </script>
 </body>

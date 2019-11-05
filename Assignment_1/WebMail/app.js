@@ -19,7 +19,6 @@ app.get('/', function (req, res) {
 app.get('/webmail.html', function (req, res) {
    res.sendFile( __dirname + "/public/" + "webmail.html" );
 })
-
 app.get('/inbox',function(req, res){
   var db = req.db;
   var collection = db.get('emailList');
@@ -33,7 +32,6 @@ app.get('/inbox',function(req, res){
 		}
   });
 })
-
 app.get('/Update',function(req,res){
   var db = req.db;
   var collection = db.get('emailList');
@@ -47,7 +45,6 @@ app.get('/Update',function(req,res){
 	})
 
 })
-
 app.get('/Email',function(req, res){
   var db = req.db;
   var collection = db.get('emailList');
@@ -60,6 +57,22 @@ app.get('/Email',function(req, res){
 			res.send(err);
 		}
   });
+})
+
+app.post('/NewMail', express.urlencoded({ extended: true }), function(req, res){
+  var db = req.db;
+	var collection = db.get('emailList');
+
+	var title = req.query.title;
+  var recipient = req.query.recipient;
+  var content = req.query.content;
+
+  var d = new Date();
+  var date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+
+  var sender = 'u3560307@hku.hk';
+
+  collection.insert({'sender':sender,'recipient':recipient,'title':title,'time':date, 'content':content,'mailbox':'Sent'});
 })
 
 

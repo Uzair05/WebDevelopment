@@ -19,13 +19,38 @@ app.get('/', function (req, res) {
 app.get('/webmail.html', function (req, res) {
    res.sendFile( __dirname + "/public/" + "webmail.html" );
 })
-
 app.get('/inbox',function(req, res){
   var db = req.db;
   var collection = db.get('emailList');
   var box = req.query.mailBox;
 
-	collection.find({}, {}, function(err,docs){
+	collection.find({'mailbox':box}, {}, function(err,docs){
+    if (err === null){
+			res.send(docs);
+		}else{
+			res.send(err);
+		}
+  });
+})
+app.get('/Update',function(req,res){
+  var db = req.db;
+  var collection = db.get('emailList');
+  var id = req.query.id;
+  var box = req.query.mailBox;
+
+  collection.update({"_id":id}, {$set:{'mailbox':box}}, function(err, docs){
+		if (err === null) {
+			res.send("OK");
+		} else res.send(err);
+	})
+
+})
+app.get('/Email',function(req, res){
+  var db = req.db;
+  var collection = db.get('emailList');
+  var id = req.query.id;
+
+	collection.find({'_id':id}, {}, function(err,docs){
     if (err === null){
 			res.send(docs);
 		}else{
@@ -34,6 +59,21 @@ app.get('/inbox',function(req, res){
   });
 })
 
+app.post('/NewMail', express.urlencoded({ extended: true }), function(req, res){
+  var db = req.db;
+	var collection = db.get('emailList');
+
+	var title = req.query.title;
+  var recipient = req.query.recipient;
+  var content = req.query.content;
+
+  var d = new Date();
+  var date = d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate();
+
+  var sender = 'u3560307@hku.hk';
+
+  collection.insert({'sender':sender,'recipient':recipient,'title':title,'time':date, 'content':content,'mailbox':'Sent'});
+})
 
 
 
