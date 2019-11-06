@@ -13,3 +13,9 @@ db.emailList.insert({'sender':'u3560307@hku.hk','recipient':'barackobama','title
 db.emailList.insert({'sender':'bocsoc@hku.hk','recipient':'u3560307@hku.hk','title':'Scam 1','time':'01:00:00 Mon Nov 4 2019', 'content':'Scammed you 1','mailbox':'Trash'})
 db.emailList.insert({'sender':'bocsoc@hku.hk','recipient':'u3560307@hku.hk','title':'Scam 2','time':'02:00:00 Mon Nov 4 2019', 'content':'Scammed you 2','mailbox':'Trash'})
 db.emailList.insert({'sender':'bocsoc@hku.hk','recipient':'u3560307@hku.hk','title':'Scam 3','time':'03:00:00 Mon Nov 4 2019', 'content':'Scammed you 3','mailbox':'Trash'})
+
+
+
+
+
+db.emailList.insert({'sender':,'recipient':,'title':,'time':, 'content':,'mailbox':'Sent'})
