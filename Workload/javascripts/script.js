@@ -40,7 +40,7 @@ function LoadInbox(poh){
 
     }
   }
-  xmlhttp.open("GET","inbox?mailBox=" + poh,true);
+  xmlhttp.open("GET","retrieveemaillist?mailBox=" + poh,true);
   xmlhttp.send();
 }
 function ResHTML(docs) {
@@ -92,8 +92,10 @@ function Update(id,mailBox){
       }
     }
   }
-  xmlhttp.open("GET","Update?mailBox=" + mailBox + "&id=" + id,true);
-  xmlhttp.send();
+  xmlhttp.open("POST","changemailbox",true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("mailBox="+mailBox+"&id="+id);
+  LoadInbox(currentMailBox);
 }
 function LoadEmail(id){
   //clears mailbox
@@ -107,7 +109,7 @@ function LoadEmail(id){
       cleanColour();
     }
   }
-  xmlhttp.open("GET","Email?id=" + id,true);
+  xmlhttp.open("GET","getemail?id=" + id,true);
   xmlhttp.send();
 }
 function ResEmail(mood){
@@ -140,20 +142,8 @@ function PostMan(){
       LoadInbox('Sent');
     }
   }
-  xmlhttp.open("POST", "NewMail", true);
+  xmlhttp.open("POST", "sendemail", true);
   xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
   xmlhttp.send("recipient="+recipient+"&title="+title+"&content="+content);
   LoadInbox('Sent');
-}
-function SetDummy(){
-  var xmlhttp = new XMLHttpRequest();
-  xmlhttp.onreadystatechange = function(){
-    if (xmlhttp.readyState == 4 && xmlhttp.status == 200){
-      console.log("Ok");
-    }
-  }
-  //Sets the dummy mails;
-  xmlhttp.open("GET","Dummythc",true);
-  xmlhttp.send();
-  LoadInbox('Inbox');
 }
