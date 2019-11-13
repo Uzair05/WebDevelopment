@@ -20,20 +20,20 @@ function populateContactList() {
   $.getJSON( '/users/contactList', function(data) {
 
 
-    /*
+
     if (beginSort == true){
       if (sortCounter%2 == 1){
         for(var i=0;i<data.length;++i){
           for(var m=0;m<(data.length-1);++m){
             if (data[m].name > data[m+1].name){
-              var xor = data[m].name;
-              data[m].name = data[m+1].name;
-              data[m+1].name = data[m].name;
+              var xor = data[m];
+              data[m] = data[m+1];
+              data[m+1] = xor;
             }
           }
         }
+        beginSort = false;
       }
-      beginSort = false;
     }
 
     if (beginSort == true){
@@ -41,15 +41,15 @@ function populateContactList() {
         for(var i=0;i<data.length;++i){
           for(var m=0;m<(data.length-1);++m){
             if (data[m].name < data[m+1].name){
-              var xor = data[m].name;
-              data[m].name = data[m+1].name;
-              data[m+1].name = data[m].name;
+              var xor = data[m];
+              data[m] = data[m+1];
+              data[m+1] = xor;
             }
           }
         }
+        beginSort = false;
       }
-      beginSort = false;
-    } */
+    }
 
 
 

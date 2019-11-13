@@ -54,7 +54,6 @@ router.delete('/deleteContact/:id', function(req, res) {
   collection.remove(filter, function(err){
     res.send( (err === null) ? { msg: '' } : { msg:"error" + err } );
   });
-
 });
 
 
