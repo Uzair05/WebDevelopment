@@ -7,10 +7,16 @@ var logger = require('morgan');
 var monk = require('monk');
 var db = monk('localhost:27017/assignment2');
 
-var albumsRouter = require('./routes/albums');
+
+
+//var indexRouter = require('./routes/index');
+var usersRouter = require('./routes/albums.js');
 
 var app = express();
 
+// view engine setup
+//app.set('views', path.join(__dirname, 'views'));
+//app.set('view engine', 'pug');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -19,12 +25,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Make our db accessible to routers
 app.use(function(req,res,next){
-  req.db = db;
-  next();
+  req.db = db; next();
 });
 
-
-app.use('/', albumsRouter);
+//app.use('/', indexRouter);
+app.use('/', usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,7 +52,7 @@ app.use(function(err, req, res, next) {
 
 //module.exports = app;
 var server = app.listen(3002, function () {
-  var host = server.address().address
-  var port = server.address().port
-  console.log("Example app listening at http://%s:%s", host, port)
+var host = server.address().address
+var port = server.address().port
+console.log("Example app listening at http://%s:%s", host, port)
 })

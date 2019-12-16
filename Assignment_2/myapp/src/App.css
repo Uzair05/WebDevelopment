@@ -1,38 +1,46 @@
-.App {
-  text-align: center;
+.App{
+
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.LoginBar{
+display: inline-block;
+float: right;
+height: auto;
+border-style: solid;
+border-color: black;
+visibility: visible;
+}
+.LogoutBar{
+display: inline-block;
+float: right;
+height: auto;
+border-style: solid;
+border-color: black;
+visibility: hidden;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.FriendsList{
+display: inline-block;
+float: left;
+width: 300px;
+margin-left: auto;
+height: auto;
+border-style: solid;
+border-color: black;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.AlbumSpace{
+  display: inline-block;
+  float: right;
+  margin-left: 20px;
+  margin-right: auto;
+  border-style: solid;
+  border-color: black;
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.HeaderSpace{
+  text-align: left;
+  font-weight: bold;
+  border-style: solid;
+  border-color: black;
 }

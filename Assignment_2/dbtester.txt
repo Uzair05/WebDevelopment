@@ -1,4 +1,7 @@
 db.userList.insert({'username': 'Eddie', 'password': '123456', 'friends':['Ken', 'Alice', 'Bill']})
+db.userList.insert({'username': 'Ken', 'password': '123456', 'friends':['Eddie', 'Alice', 'Bill']})
+db.userList.insert({'username': 'Alice', 'password': '123456', 'friends':['Ken', 'Eddie', 'Bill']})
+db.userList.insert({'username': 'Bill', 'password': '123456', 'friends':['Ken', 'Alice', 'Eddie']})
 
 
-db.photoList.insert({'url': 'http://localhost:3002/uploads/1.jpg', 'userid': 'xxxxxxx', 'likedby':['Ken', 'Alice']})
+db.photoList.insert({'url': 'http://localhost:3002/uploads/1.jpg', 'userid': "5ded096b988e7aa8bc187877", 'likedby':['Ken', 'Alice']})

@@ -1,111 +1,144 @@
 var express = require('express');
 var router = express.Router();
+var cors = require('cors');
 var cookieParser = require('cookie-parser');
-const cors = require('cors');
-var corsOption = {
-  origin: 'http://localhost:3002'
-}
-
-router.use(cookieParser());
-router.use(cors(corsOption)
-
-function findFriends(docs){
-  var resp = [];
-    //extract username and _id of friends amd me
-    //Array of objects name:+++, _id:+++
-  return resp;
-}
-
-/**/
-router.get('/init', cors(), function(req, res) {
-  if (req.cookies.userID) {
-    //res.send("<p>"++" has logged in</p><p>Click to <a href='/logout'>log out</a></p>");
-    var userName = req.cookies.userID;
-    var db = req.db;
-    var collection = db.get('userList');
+router.use(cookieParser()); /*Implement cookies in the end*/
 
 
-    collection.find({'username':userName},{},function(err,docs){
+/*Redirect Empty GET requests (Debugging purposes)*/
+router.get('/',cors(),function(req,res){
+  res.redirect('/init');
+});
+/*Handle GET init requests*/
+router.get('/init',cors(),function(req,res){
+  var db = req.db;
+  var collection = db.get("userList");
+
+  if(req.cookies.userID !== undefined){
+    var userID = req.cookies.userID;
+    collection.find({'username': userID},{},function(err, docs){
       if (err === null){
-        res.json(findFriends(docs));
+        //var resp = [{"username":docs[0].username, "_id":docs[0]._id}];
+        var resp = [];
+        var friends = docs[0].friends;
+          for(var i=0;i<friends.length;i++){
+            collection.find({'username': friends[i]},{},function(err2, doc2){
+              if (err2 === null){
+                resp.push({"username":doc2[0].username, "_id":doc2[0]._id});
+                if (resp.length == friends.length){
+                  var data = {"username":userID, "friends":resp};
+                  res.json(data);
+                }
+              }else{
+                res.send({msg:err2});
+              }
+            });
+          }
+      }else{
+          res.send({msg: err});
+        }
+    });
+  }else{
+    res.send("");
+  }
+});
+/*Handle POST login requests*/
+router.post('/login',cors(),function(req,res){
+  var username = req.body.username;
+  var password = req.body.password;
+  var db = req.db;
+  var collection = db.get("userList");
+
+  collection.find({"username":username},{},function(err,docs){
+    if (err === null){
+      if (docs[0].password === password){
+        res.cookie("userID",docs[0].username,{ maxAge: 3600000});
+        var friends = docs[0].friends;
+        var resp = [];
+        for(var i=0;i<friends.length;i++){
+          collection.find({"username":friends[i]},{},function(err2,doc2){
+            if (err2 === null){
+              resp.push({"username":doc2[0].username, "_id":doc[2]._id});
+              if (resp.length == friends.length){
+                var data = {"username":username, "friends":resp};
+                res.json(data);
+              }
+            }else{
+              res.send({msg: err2});
+            }
+          });
+        }
+
+      }else{
+        res.send("Login Failure");
       }
-      else{
-        res.send({msg: err});
+    }else{
+      res.send({msg: err});
+    }
+  });
+});
+/*Handle GET logout requests*/
+router.get('/logout',cors(),function(req,res){
+  res.clearCookie(req.cookies.userID);
+  res.json("");
+});
+/*Handle GET getalbum requests*/
+router.get('/getalbum/:userid',cors(),function(req,res){
+  var db = req.db;
+  var collection2 = db.get("userList");
+  var collection = db.get("photoList");
+
+  var userID = req.param.userid;
+
+
+  if (userID == '0'){
+    var userID = req.cookies.userID;
+    collection2.find({"username":userID},{},function(err,docs){
+      if (err ==== null){
+        var currentUserID = docs[0]._id;
+        collection.find({"userid":currentUserID},{},function(err2,doc2){
+          if (err2 === null){
+            var resp = [];
+            for(var i=0;i<doc2.length;i++){
+              resp.push({"_id":doc2[i]._id, "url":docs2[i].url, "likedby":docs2[i].likedby});
+              if (resp.length == doc2.length){
+                res.json(resp);
+              }
+            }
+          }else{
+            res.send({msg:err2});
+          }
+        });
+      }else{
+        res.send({msg:err})
       }
     });
-  } else {
-    res.send("");
+  }else{
+    ollection.find({"userid":userID},{},function(err2,doc2){
+      if (err2 === null){
+        var resp = [];
+        for(var i=0;i<doc2.length;i++){
+          resp.push({"_id":doc2[i]._id, "url":docs2[i].url, "likedby":docs2[i].likedby});
+          if (resp.length == doc2.length){
+            res.json(resp);
+          }
+        }
+      }else{
+        res.send({msg:err2});
+      }
+    });
   }
 
 });
 
 
 /*
-* Logout; Clear Cookies
+POST to upload photos
+DELETE to delete photos
+PUT to update likes
 */
-router.get('/logout', cors(), function(req, res) {
-  res.clearCookie('userID');
-  res.send("");
-});
-
-
-/*
- * Login; set Cookies
- */
-router.post('/login', cors(), function(req, res) {
-    var db = req.db;
-    var collection = db.get('userList');
-
-    var userName = req.body.username;
-    var password = req.body.password;
-
-    collection.find({'username':userName},{},function(err,docs){
-      if ((docs.length() == 0 || docs.password != password) && (err === null)){
-        res.send({'message':"Login failure"});
-      }else if (err != null){
-        res.send({msg: err});
-      }else{
-
-      }
-    });
-});
 
 
 
-
-
-/*
-* PUT to updateContact
-*/
-router.put('/updateContact/:id', cors(), function (req, res) {
-    var db = req.db;
-    var collection = db.get('contactList');
-    var contactToUpdate = req.params.id;
-    var filter = { "_id": contactToUpdate};
-    collection.update(filter, { $set: {"name": req.body.name, "tel": req.body.tel, "email": req.body.email}}, function (err, result) {
-        res.send(
-            (err === null) ? { msg: '' } : { msg: err }
-        );
-    })
-});
-
-
-
-/*
- * DELETE to deleteContact.
- */
-router.delete('/deleteContact/:id', cors(), function(req, res) {
-    var db = req.db;
-    var contactID = req.params.id;
-    var collection = db.get('contactList');
-    collection.remove({'_id':contactID}, function(err, result){
-    	res.send((err === null)?{msg:''}:{msg:err});
-    });
-});
-
-/*
- * Handle preflighted request
- */
 router.options("/*", cors());
-
 module.exports = router;
