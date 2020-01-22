@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>A Simple iPhone Simulator</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body onload="drawTime();drawDay();">
+
+	<div id="time"></div>
+	<div id="day"></div>
+	
+	<div id="iconblocks" class="blocks">
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="icon" id="musicIcon" src="music.png" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="icon" id="photosIcon" src="photos.png" draggable="true" ondragstart="drag(event)" onclick="openPhotos()">
+			</div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="icon" id="pagesIcon" src="pages.png" draggable="true" ondragstart="drag(event)">
+			</div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)">
+				<img class="icon" id="videoIcon" src="video.png" draggable="true" ondragstart="drag(event)" onclick="openVideo()">
+			</div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+			<div class="block" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+	</div>
+
+<script>
+	var photo_list=["photo1.jpg","photo2.jpg","photo3.jpg"];
+	var global_photo_index=0;
+	
+	function drawDay() {
+		var d = new Date();
+		
+		var datetext = d.toDateString();
+		
+		document.getElementById("day").innerHTML = datetext;
+	}	
+	
+	setInterval(drawTime, 1000);
+
+	function drawTime() {
+		var d = new Date();
+		// e.g., d is "Wed Sep 25 2019 23:10:39 GMT+0800 (HKT)"
+		
+		var datetext = d.toTimeString();
+		// datetext is "23:10:39 GMT+0800 (HKT)"
+		
+		// Split with ' ' and we get: ["23:10:39", "GMT+0800", "(HKT)"]
+		// Take the first value from array 
+		datetext = datetext.split(' ')[0];
+
+		document.getElementById("time").innerHTML = datetext;
+	}
+	
+
+	function allowDrop(ev) {
+		ev.preventDefault();
+	}
+
+	function drag(ev) {
+		ev.dataTransfer.setData("text", ev.target.id);
+	}
+
+	function drop(ev) {
+		ev.preventDefault();
+		var data = ev.dataTransfer.getData("text");
+
+		// Check whether the current grid block is occupied 
+		if (ev.currentTarget.children.length==0)
+		{
+			ev.currentTarget.appendChild(document.getElementById(data));
+		}
+	}
+	
+	
+	function openVideo() {
+		document.getElementById('time').style.display = "none";
+		document.getElementById('day').style.display = "none";		
+		document.getElementById('iconblocks').style.display = "none";
+		
+		var navbar = document.createElement("nav");
+		navbar.setAttribute("id","navId");		
+		var div1 = document.createElement("div");
+		div1.setAttribute("id","returnDiv");
+		div1.innerHTML = "<";
+		div1.setAttribute("onclick","return2HomeScreen()");
+		navbar.appendChild(div1);
+		var body =  document.getElementsByTagName("body")[0];
+		body.appendChild(navbar);
+
+		var video1 = document.createElement("video");
+		video1.setAttribute("id","videoId");
+		video1.setAttribute("controls","controls");
+		var source1 = document.createElement("source");
+		source1.setAttribute("src","Garfield.mp4");
+		source1.setAttribute("type","video/mp4");
+		video1.appendChild(source1);
+		body.appendChild(video1);	
+	}
+	
+
+	function openPhotos(){
+		document.getElementById('time').style.display = "none";
+		document.getElementById('day').style.display = "none";		
+		document.getElementById('iconblocks').style.display = "none";
+
+		var navbar = document.createElement("nav");
+		navbar.setAttribute("id","navId");
+		var div1 = document.createElement("div");
+		div1.innerHTML = "<";
+		div1.setAttribute("onclick","return2HomeScreen()");
+		var div2 = document.createElement("div");
+		div2.innerHTML = "Previous";
+		div2.setAttribute("onclick","previousPhoto()");
+		var div3 = document.createElement("div");
+		div3.innerHTML = "Next";
+		div3.setAttribute("onclick","nextPhoto()");
+		navbar.appendChild(div1);		
+		navbar.appendChild(div2);	
+		navbar.appendChild(div3);
+		var body =  document.getElementsByTagName("body")[0];
+		body.appendChild(navbar);
+
+		var mycanvas = document.createElement("canvas");
+		mycanvas.setAttribute("id","photo_canvas");
+		mycanvas.setAttribute("width","272");
+		mycanvas.setAttribute("height","457");
+		var ctx=mycanvas.getContext("2d");
+		
+		var img = new Image(); 
+		img.onload = function() {
+			ctx.drawImage(img, 0,0, 272, 457); 
+		};
+		img.src = photo_list[global_photo_index];
+		
+		body.appendChild(mycanvas);
+	}
+	
+	
+	function previousPhoto(){
+		global_photo_index = global_photo_index-1;
+		if (global_photo_index<0){
+			global_photo_index=0;
+		}
+		else 
+		{
+			var canvas = document.getElementById("photo_canvas");
+			var ctx=canvas.getContext("2d");
+			var img = new Image(); 
+			img.onload = function() {
+				ctx.drawImage(img, 0,0, 272, 457); 
+			};
+			img.src = photo_list[global_photo_index];
+		}
+	}
+	
+
+	function nextPhoto(){
+		global_photo_index = global_photo_index+1;
+		if (global_photo_index>photo_list.length-1){
+			global_photo_index=photo_list.length-1;
+		}
+		else
+		{
+			var canvas = document.getElementById("photo_canvas");
+			var ctx=canvas.getContext("2d");
+			var img = new Image(); 
+			img.onload = function() {
+				ctx.drawImage(img, 0,0, 272, 457); 
+			};
+			img.src = photo_list[global_photo_index];
+		}
+	}
+	
+
+	function return2HomeScreen() {	
+		var ele = document.getElementById('navId');
+		if(ele){
+			ele.parentElement.removeChild(ele);
+		}
+		
+		ele = document.getElementById('videoId');
+		if(ele){
+			ele.parentElement.removeChild(ele);
+		}
+
+		ele = document.getElementById('photo_canvas');
+		if(ele){
+			ele.parentElement.removeChild(ele);
+		}	
+		
+		document.getElementById('time').style.display = "block";
+		document.getElementById('day').style.display = "block";		
+		document.getElementById('iconblocks').style.display = "block";
+	}	
+	
+</script>
+	
+</body>
+</html>

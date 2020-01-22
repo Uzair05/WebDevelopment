@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Stock Status System</title>
+   	<link rel="stylesheet" href="/stylesheets/style.css">
+  </head>
+
+  <body onload="showAll()">
+  	<h1>Stock Status System</h1>
+    <div id="List">
+		<div id="entries">
+		</div>
+
+		<div id="button_all" class="buttons" onclick="showAll()">
+			<p> Show All</p>
+		</div>
+		
+		<input id="stockcode" type="text"> 		
+		<div class="buttons" onclick="filterS()">
+			<p>Filter by Stockcode</p>
+		</div>
+		
+		<input id="category" type="text"> 
+		<div class="buttons" onclick="filterC()">
+			<p>Filter by Category</p>
+		</div>
+    </div>
+    
+    <script>
+		
+		function showAll() {
+			var xmlhttp = new XMLHttpRequest();
+			
+			xmlhttp.onreadystatechange = function () {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var stocks = document.getElementById("entries");
+					stocks.innerHTML = xmlhttp.responseText;
+				}
+			}
+			xmlhttp.open("GET", "GetEntries?show=all", true);
+			xmlhttp.send();
+			
+			document.getElementById("button_all").style.display = "none";
+      	}
+
+      	function filterS() {
+			var xmlhttp = new XMLHttpRequest();
+			
+			xmlhttp.onreadystatechange = function () {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var stocks = document.getElementById("entries");
+					stocks.innerHTML = xmlhttp.responseText;
+				}
+			}
+			
+			var stockCode = document.getElementById("stockcode").value;
+			xmlhttp.open("GET", "GetEntries?show=stockcode&value="+stockCode,true);
+			xmlhttp.send();
+			
+			document.getElementById("button_all").style.display = "block";
+
+      	}
+
+      	function filterC() {
+			var xmlhttp = new XMLHttpRequest();
+			
+			xmlhttp.onreadystatechange = function () {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					var stocks = document.getElementById("entries");
+					stocks.innerHTML = xmlhttp.responseText;
+				}
+			}
+			
+			var category = document.getElementById("category").value;
+			xmlhttp.open("GET", "GetEntries?show=category&value="+category,true);
+			xmlhttp.send();
+			
+			document.getElementById("button_all").style.display = "block";
+      	}
+		
+		function changeState(elem) {
+			var oldValue = elem.innerHTML;
+			var newvalue;
+			var itemID = elem.parentNode.getAttribute('id');
+
+			if (oldValue == 'RISE') {
+				newvalue = 'FALL';
+			} else {
+				newvalue = 'RISE';
+			}
+			
+			var xmlhttp = new XMLHttpRequest();
+			
+			xmlhttp.onreadystatechange = function () {
+				if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+					elem.innerHTML = xmlhttp.responseText;
+				}
+			}
+
+			xmlhttp.open("POST", "updateState", true);
+			xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			xmlhttp.send("newValue="+newvalue+"&id="+itemID);
+		}
+		
+    </script>
+  </body>
+</html>

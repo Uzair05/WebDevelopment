@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Webmail System</title>
+    <link rel="stylesheet" type="text/css"  href="stylesheets/style.css">
+    <script src="/javascripts/script.js"></script>
+  </head>
+
+  <body onload="loadMoreEmails('Inbox')">
+    <div id="heading">My Webmail System</div>
+      <div id="frame">			
+        <div id="content">
+          <div id="function">
+            <button id="compose" onclick="ComposeEmail()">Compose</button>
+            <div id="move_func" class="dropdown">
+                <button class="dropbtn">Move to ...</button>
+                <div class="dropdown-content">
+                  <a href="#" id="dropdown-inbox" onclick="mailboxChange('Inbox')">Inbox</a>
+                  <a href="#" id="dropdown-sent" onclick="mailboxChange('Sent')">Sent</a>
+                  <a href="#" id="dropdown-important" onclick="mailboxChange('Important')">Important</a>
+                  <a href="#" id="dropdown-trash" onclick="mailboxChange('Trash')">Trash</a>
+                </div>
+              </div>
+            <button id="new" onclick="newerEmail('Inbox')"> < </button>
+            <button id="old" onclick="olderEmail('Inbox')"> > </button>
+          </div>
+          <div id="mailbox">
+            <div id="inbox" onclick="loadMoreEmails('Inbox')"><p>Inbox</p></div>   
+            <div id="important" onclick="loadMoreEmails('Important')"><p>Important</p></div>  
+            <div id="sent" onclick="loadMoreEmails('Sent')"><p>Sent</p></div>   
+            <div id="trash" onclick="loadMoreEmails('Trash')"><p>Trash</p></div>  
+          </div>
+        </div>
+
+        <div id="emails"> </div>
+        <div id="mailContent"> </div>
+        <div id="send-email" style="display: none">
+          <fieldset style="float: left">
+            <legend id="compose-legend"> New Message</legend>
+            <br> <br>
+            <table style="height: 40px; margin-top: 20px">
+                <tr> 
+                  <td style="text-align: left">To: </td>
+                  <td><input type="text" id="compose-recipient"></td>
+                </tr>
+                <tr> 
+                  <td style="text-align: left"> Subject: </td>
+                  <td> <input type="text" id="compose-title"> </td>
+                </tr>
+            </table>
+            <br>
+            <br>
+            <textarea rows="4" cols="50" id="compose-content" > </textarea>
+            <br><br><br>
+            <button id="compose-btn" onclick="SendEmail()"> Send </button>
+          </fieldset>
+          <br> <br>
+          
+        </div>
+      </div>
+    </div>
+  </body>
+
+</html>

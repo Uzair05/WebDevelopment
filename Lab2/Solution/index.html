@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>HKU Search</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+	<script src="index.js"></script>
+</head>
+<body onload="loadPage()">
+
+    <a href="index.html">
+        <div id="logo"></div>
+    </a>
+	
+    <div id="searchArea">    
+        <form action="https://www.google.com/search" method="get">
+			<div class="col-1">Let's</div>
+            <div class="col-1">
+                <input class="searchButton" type="submit" value="Search" id="myButton">
+            </div>
+            <div class="col-1">
+                <input class="searchInput" type="text" name="q" id="mySearch">
+            </div>
+            <div class="col-1">
+                in <b>hku.hk</b>
+				<input type="hidden" name="as_sitesearch" value="hku.hk">
+            </div>
+        </form>
+    </div> 
+
+    <div id="eventList" class="events">
+        <span> This needs to be removed!</span>
+          
+    </div>
+	
+     <img class="image" src="HKU.jpg">
+   
+
+    <div id="footer">
+
+    </div>
+</body>
+</html>
