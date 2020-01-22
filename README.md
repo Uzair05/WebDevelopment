@@ -1,5 +1,5 @@
 # WebDevelopment
-HKU - COMP3322 Labs and Assignments
+HKU - COMP3322 Labs and Assignments (2019-2020 Semester 1)
 
 ## Upcoming Updates
 Plans to post an updated and improved version of Assignment2 Submitable.
